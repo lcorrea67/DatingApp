@@ -1,0 +1,23 @@
+
+<!-- Bootstrop containers provide centering and padding around the content inside. mt-5 is a margin (margin top) -->
+<div class="container mt-5">
+  <div *ngIf="!registerMode" style="text-align: center">
+    <h1>Find your match</h1>
+    <p class="lead">Come on in to view your matches... All you need to do is sign up!</p>
+    <div class="text-center">
+      <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()" >Register</button>
+      <button class="btn btn-info btn-lg">Learn more</button>
+    </div>
+  </div>
+
+  <!-- container is used to display the register form. It has 4 columns. bootstrap grids are made up of 12 sections, this one uses 4-->
+  <div *ngIf="registerMode" class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <!-- this is a child component of the 'home' component-->
+        <!-- here we re passign a property 'values' into the child component 'app-register' -->
+        <app-register [valuesFromHome]="values"></app-register>
+      </div>
+    </div>
+  </div>
+</div>
