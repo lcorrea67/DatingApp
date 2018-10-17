@@ -16,7 +16,10 @@
       <div class="col-4">
         <!-- this is a child component of the 'home' component-->
         <!-- here we re passign a property 'values' into the child component 'app-register' -->
-        <app-register [valuesFromHome]="values"></app-register>
+        <!-- [] are used for input properties, () are used for output properties-->
+        <!-- cancelRegister output property call the cancelRegisterMode in the register component-->
+        <!-- [valuesFromHome]="values"   input parameter  goes before (cancelRegister) -->
+        <app-register  (cancelRegister)="cancelRegisterMode($event)"></app-register>
       </div>
     </div>
   </div>

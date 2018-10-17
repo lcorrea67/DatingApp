@@ -17,14 +17,23 @@ export class HomeComponent implements OnInit {
   }
 
   registerToggle() {
-    this.registerMode = !this.registerMode;
+    this.registerMode = true;
   }
 
   getValues() {
-    this.http.get('http://localhost:5000/api/values').subscribe(response => {
-      this.values = response;
-    }, error => {
-      console.log(error);
-    });
+    this.http.get("http://localhost:5000/api/values").subscribe(
+      response => {
+        this.values = response;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
+
+  // the cancel button in the register component will call this method
+  cancelRegisterMode(registerMode) {
+    this.registerMode = registerMode;
+  }
+
 }
