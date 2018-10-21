@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Dating App</a>
-     <ul class="navbar-nav mr-auto">
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="#">Dating App</a>
+    <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#">Matches</a>
       </li>
@@ -10,30 +11,31 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Messages</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" (click)="logOut()">Logout</a>
-      </li>
     </ul>
 
     <!-- *ngIf is structal directive - they diectly change the DOM, if the user isnot logged in  -->
-    <div *ngIf="loggedIn()" class="dropdown">
-      <a class="dropdown-toggle text-light">
-        Welcome User
+    <div *ngIf="loggedIn()" class="dropdown" dropdown>
+      <a class="dropdown-toggle text-light" dropdownToggle>
+        <!-- '?' makes the property optional so errors are not thrown in javascript on the client
+                the token is loaded when the login is done and is accessible, on page refresh however, 
+                the token is not remembered
+            -->
+        Welcome {{authService.decodedToken?.unique_name | titlecase}}
       </a>
-    
-      <div class="dropdown-menu" >
+
+      <div class="dropdown-menu mt-3" *dropdownMenu>
         <a class="dropdown-item" href="#"><i class="fa fa-user"></i>Edit profile</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#"><i class="fs fa-sign-out"></i>Logout</a>
+        <a class="dropdown-item" (click)="logOut()"><i class="fs fa-sign-out"></i>Logout</a>
       </div>
     </div>
 
     <!-- *ngIf is structal directive - they diectly change the DOM, if the user isnot logged in  -->
-   <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
-      <input class="form-control mr-sm-2" type="text" placeholder="Username" name="username" 
-            required [(ngModel)]="model.username">
-      <input class="form-control mr-sm-2" type="password" placeholder="Password" name="password" 
-            required [(ngModel)]="model.password">
+    <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+      <input class="form-control mr-sm-2" type="text" placeholder="Username" name="username" required [(ngModel)]="model.username">
+      <input class="form-control mr-sm-2" type="password" placeholder="Password" name="password" required [(ngModel)]="model.password">
       <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
     </form>
+  </div>
+
 </nav>
