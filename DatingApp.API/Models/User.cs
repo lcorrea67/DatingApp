@@ -6,13 +6,13 @@ namespace DatingApp.API.Models
     public class User
     {
         public User() {}
-        public User(int id, string userName, string gender, DateTime dateOfBirth, string knowsAs, DateTime created, DateTime lastActive, string introduction, string lookingFor, string interests, string city, string country)
+        public User(int id, string userName, string gender, DateTime dateOfBirth, string knownAs, DateTime created, DateTime lastActive, string introduction, string lookingFor, string interests, string city, string country)
         {
             this.Id = id;
             this.UserName = userName;
             this.Gender = gender;
             this.DateOfBirth = dateOfBirth;
-            this.KnowsAs = knowsAs;
+            this.KnownAs = knownAs;
             this.Created = created;
             this.LastActive = lastActive;
             this.Introduction = introduction;
@@ -34,7 +34,7 @@ namespace DatingApp.API.Models
 
         public DateTime DateOfBirth { get; set; }
 
-        public string KnowsAs { get; set; }
+        public string KnownAs { get; set; }
 
         public DateTime Created { get; set; }
 
