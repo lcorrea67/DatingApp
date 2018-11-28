@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.API.Data;
@@ -40,7 +41,24 @@ namespace DatingApp.API.Controllers
             return Ok(userToReturn);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto) 
+        {
+            // check if the user that is logged in is attempting to update his profile via HttpPut(id)
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) 
+                return Unauthorized();
 
+            // get the user from the repo
+            var userFromRepo = await _repository.GetUser(id);
+
+            // update the new user profile coming in (userfromUpdateDto) to the repository user
+            _mapper.Map(userForUpdateDto, userFromRepo);
+
+            if (await _repository.SaveAll()) 
+                return NoContent();
+
+            throw new System.Exception($"Updateing user {id} failed on save");
+        }
     }
 
     internal class UserForDetailDto
