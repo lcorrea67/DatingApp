@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 export class MemberEditComponent implements OnInit {
   @ViewChild('editForm') editForm: NgForm;  // gives access the HTML NgForm element within the 'code behind'
   user: User;
+  photoUrl: string;
 
   @HostListener('window:beforeunload', ['$event'])  // checks if the browser window is being closed
   unloadNotification($event: any) { // if the browser window is closed then this pops the message
@@ -29,6 +30,7 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
   updateUser() {
@@ -42,4 +44,7 @@ export class MemberEditComponent implements OnInit {
     });
   }
 
+    updateMainPhoto(photoUrl) {
+      this.user.photoUrl = photoUrl;
+    }
 }

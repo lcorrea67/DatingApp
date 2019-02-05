@@ -13,8 +13,11 @@
       </li>
     </ul>
 
-    <!-- *ngIf is structal directive - they diectly change the DOM, if the user isnot logged in  -->
+    <!-- *ngIf is structal directive - they directly change the DOM, if the user isnot logged in  -->
     <div *ngIf="loggedIn()" class="dropdown" dropdown>
+      <span class="mr-1">
+          <img src="{{photoUrl}}" alt="">
+      </span>
       <a class="dropdown-toggle text-light" dropdownToggle>
         <!-- '?' makes the property optional so errors are not thrown in javascript on the client
                 the token is loaded when the login is done and is accessible, on page refresh however, 
