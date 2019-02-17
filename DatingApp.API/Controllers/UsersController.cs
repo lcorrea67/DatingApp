@@ -3,15 +3,18 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
+using DatingApp.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.API.Controllers
 {
+    // ServiceFilter MUST be the first attribute in the class
+    [ServiceFilter(typeof(LogUserActivity))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController] 
-    public class UsersController : ControllerBase
+     public class UsersController : ControllerBase
     {
         private IDatingRepository _repository;
         private IMapper _mapper;

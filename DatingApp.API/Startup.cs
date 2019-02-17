@@ -61,7 +61,10 @@ namespace DatingApp.API
                             ValidateAudience = false
                         };
                     });
-
+            
+            // AddScoped indicates that a new instance o fthe service must be created per request
+            // usage  UsersController.cs
+            services.AddScoped<LogUserActivity>();
             
         }
 
