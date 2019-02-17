@@ -58,6 +58,10 @@ export class PhotoEditorComponent implements OnInit {
           };
 
           this.photos.push(photo);
+          if (photo.isMain) {
+            this.authService.changeMemberPhoto(photo.url);
+            this.currentMain = this.photos.filter(p => p.isMain === true)[0];
+            this.currentMain.isMain = false;          }
       }
     };
   }

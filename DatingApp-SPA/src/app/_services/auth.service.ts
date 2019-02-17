@@ -48,9 +48,9 @@ export class AuthService {
                     );
   }
 
-  register(model: any) {
+  register(user: User) {
     // the poost method returns an Observable so we need to suscribe to it from the register compoent
-    return this.http.post(this.baseUrl + 'register', model);
+    return this.http.post(this.baseUrl + 'register', user);
   }
 
   loggedIn() {

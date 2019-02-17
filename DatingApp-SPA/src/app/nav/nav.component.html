@@ -16,7 +16,7 @@
     <!-- *ngIf is structal directive - they directly change the DOM, if the user isnot logged in  -->
     <div *ngIf="loggedIn()" class="dropdown" dropdown>
       <span class="mr-1">
-          <img src="{{photoUrl}}" alt="">
+          <img src="{{photoUrl || '../../assets/user.png'}}" alt="">
       </span>
       <a class="dropdown-toggle text-light" dropdownToggle>
         <!-- '?' makes the property optional so errors are not thrown in javascript on the client
