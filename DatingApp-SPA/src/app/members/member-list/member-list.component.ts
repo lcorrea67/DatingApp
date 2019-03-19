@@ -40,7 +40,6 @@ export class MemberListComponent implements OnInit {
   }
 
   pageChanged(event: any): void {
-    console.log('here');
     this.pagination.currentPage = event.page;
     this.loadUsers();
     console.log(this.pagination.currentPage);

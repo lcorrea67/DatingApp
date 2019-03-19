@@ -33,6 +33,21 @@ namespace DatingApp.API.Data
             // perform filtering
             users = users.Where(user => user.Id != userParams.UserId);
             users = users.Where(user => user.Gender == userParams.Gender);
+
+            // get list of users that the logged in user has liked
+            if (userParams.Likers) 
+            {
+                var userLikers = await GetUserLikes(userParams.UserId, userParams.Likers);
+                users = users.Where(u => userLikers.Contains(u.Id));
+            }
+
+            // get the list of users that liked the logged in user
+            if (userParams.Likees)
+            {
+                var userLikees = await GetUserLikes(userParams.UserId, userParams.Likers);
+                users = users.Where(u => userLikees.Contains(u.Id));
+            }
+
             if (userParams.MinAge != 18 || userParams.MaxAge != 99)
             {
                 var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
@@ -60,6 +75,20 @@ namespace DatingApp.API.Data
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 
+        private async Task<IEnumerable<int>> GetUserLikes ( int id, bool likers) 
+        {
+            var user = await _context.Users.Include(x => x.Likers).Include(x => x.Likees).FirstOrDefaultAsync(u => u.Id == id);
+
+            if (likers)
+            {
+                return user.Likers.Where(u => u.LikeeId == id).Select(u => u.LikerId);
+            }
+            else 
+            {
+                return user.Likees.Where(u => u.LikerId == id).Select(u => u.LikeeId);
+            }
+        }
+
         public async Task<User> GetUser(int id)
         {
             var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(u => u.Id == id);
@@ -80,6 +109,11 @@ namespace DatingApp.API.Data
         public async Task<Photo> GetMainPhotoForUser(int userId)
         {
             return await _context.Photos.Where(p => p.UserId == userId).FirstOrDefaultAsync(p => p.IsMain);
+        }
+
+        public async Task<Like> GetLike(int userId, int recipientId) 
+        {
+            return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == recipientId);
         }
     }
 }
